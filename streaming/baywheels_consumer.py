@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO)
 
 # InfluxDB configuration
 INFLUXDB_URL = "http://localhost:8086"
-INFLUXDB_TOKEN = "YOcj6Q-skIUtAlseN1g1yQG2C0NrNwweqeOszrEbi16mucRJjYsxnQEJzYuT-I7h8LmFzsexuv5kyulByVMCfg=="
+INFLUXDB_TOKEN =  # Replace with your actual token
 INFLUXDB_ORG = "mohit"  # Replace with your actual organization
 INFLUXDB_BUCKET = "baywheels"
 
