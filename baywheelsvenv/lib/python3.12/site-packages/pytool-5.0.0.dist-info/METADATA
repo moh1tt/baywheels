@@ -1,0 +1,70 @@
+Metadata-Version: 2.1
+Name: pytool
+Version: 5.0.0
+Summary: Pytool is a collection of utilities and language enhancements for Python
+License: MIT
+Author: Jacob Alheid
+Author-email: shakefu@gmail.com
+Requires-Python: >=3.9,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Dist: simplejson (>=3.19.2,<4.0.0)
+Requires-Dist: six (>=1.16.0,<2.0.0)
+Description-Content-Type: text/markdown
+
+# Pytool Package
+
+`pytool` is a collection of often used
+helper methods and classes that make life easier or fill in gaps in the
+Python Standard Library.
+
+Pytool is compatible with and tested against Python 3.8 and higher. End of life Python versions are not supported.
+
+> [!NOTE]
+> Pytool 4.x is a major release that is not backwards compatible with earlier
+> versions. It now requires Python 3.8 or higher, and adds Python 3 type
+> annotations among other improvements. New features will only be added to the
+> 4.x release line.
+
+Pytool's source is hosted on Github: <https://github.com/shakefu/pytool>
+
+Any comments, issues or requests should be submitted via Github:
+<https://github.com/shakefu/pytool/issues>
+
+![CI](https://github.com/shakefu/pytool/actions/workflows/ci.yaml/badge.svg)
+[![Coveralls](https://coveralls.io/repos/shakefu/pytool/badge.svg?branch=master&service=github)](https://coveralls.io/github/shakefu/pytool?branch=master)
+
+## Documentation
+
+Read the [complete
+documentation](https://pytool.readthedocs.org/en/latest/) on [Read the
+Docs](https://readthedocs.org)!
+
+## Installation
+
+Pytool is available on PyPI for your installation ease.
+
+```bash
+pip install pytool
+```
+
+## Usage
+
+Pytool is a collection of common and useful functions designed to help
+your code be easier to read, write and maintain. The API is well
+documented with examples of how they might be used.
+
+See the [complete
+documentation](https://pytool.readthedocs.org/en/latest/) on Read The
+Docs for more information.
+
+## Contributors
+
+- [shakefu](https://github.com/shakefu) (creator, maintainer)
+- [dshen109](https://github.com/dshen109) (contributor)
+- [abendig](https://github.com/abendig)
+

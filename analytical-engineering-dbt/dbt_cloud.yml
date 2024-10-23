@@ -1,0 +1,14 @@
+version: "1"
+context:
+  active-host: "cloud.getdbt.com"
+  active-project: "352101"
+projects:
+  - project-name: "Analytics"
+    project-id: "352101"
+    account-name: "Student"
+    account-id: "247110"
+    account-host: "cloud.getdbt.com"
+    token-name: "cloud-cli-dd39"
+    token-value: "dbtu_QFQVRZQY_9IV5oVMbGCWftU5x56-8FmHHHiudP5AY9jZ3OvbDA"
+
+

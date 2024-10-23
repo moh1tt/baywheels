@@ -1,0 +1,74 @@
+[0m16:33:23.275123 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1064d0350>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10697aa50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10697a690>]}
+
+
+============================== 16:33:23.279125 | 7ebc5b9c-48b3-433a-a59d-cfab54345b83 ==============================
+[0m16:33:23.279125 [info ] [MainThread]: Running with dbt=1.8.7
+[0m16:33:23.279571 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'debug': 'False', 'log_path': 'logs', 'profiles_dir': '/Users/mohit/.dbt', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'False', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'invocation_command': 'dbt compile', 'static_parser': 'True', 'target_path': 'None', 'log_format': 'default', 'send_anonymous_usage_stats': 'True'}
+[0m16:33:23.279981 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /Users/mohit/Documents/Projects/baywheels/analytical-engineering-dbt/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m16:33:23.283032 [debug] [MainThread]: Resource report: {"command_name": "compile", "command_wall_clock_time": 0.07714867, "process_user_time": 1.039514, "process_kernel_time": 0.201854, "process_mem_max_rss": "96993280", "command_success": false, "process_in_blocks": "0", "process_out_blocks": "0"}
+[0m16:33:23.283447 [debug] [MainThread]: Command `dbt compile` failed at 16:33:23.283373 after 0.08 seconds
+[0m16:33:23.283707 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106329730>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10697a7e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10697a8a0>]}
+[0m16:33:23.283944 [debug] [MainThread]: Flushing usage events
+[0m16:34:26.711402 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108d0ec60>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108eba150>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108eba4e0>]}
+
+
+============================== 16:34:26.715304 | cfd62e7d-45da-4904-a744-bebd2d2eb287 ==============================
+[0m16:34:26.715304 [info ] [MainThread]: Running with dbt=1.8.7
+[0m16:34:26.715746 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'fail_fast': 'False', 'debug': 'False', 'log_path': '/Users/mohit/Documents/Projects/baywheels/analytical-engineering-dbt/logs', 'profiles_dir': '/Users/mohit/.dbt', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'False', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'invocation_command': 'dbt compile', 'introspect': 'True', 'target_path': 'None', 'log_format': 'default', 'send_anonymous_usage_stats': 'True'}
+[0m16:34:26.716778 [error] [MainThread]: Encountered an error:
+Runtime Error
+  dbt cannot run because no profile was specified for this dbt project.
+  To specify a profile for this project, add a line like the this to
+  your dbt_project.yml file:
+  
+  profile: [profile name]
+  
+  Here, [profile name] should be replaced with a profile name
+  defined in your profiles.yml file. You can find profiles.yml here:
+  
+  /Users/mohit/.dbt/profiles.yml
+  
+[0m16:34:26.718957 [debug] [MainThread]: Resource report: {"command_name": "compile", "command_wall_clock_time": 0.06988883, "process_user_time": 1.038263, "process_kernel_time": 0.160529, "process_mem_max_rss": "98533376", "command_success": false, "process_in_blocks": "0", "process_out_blocks": "0"}
+[0m16:34:26.719503 [debug] [MainThread]: Command `dbt compile` failed at 16:34:26.719408 after 0.07 seconds
+[0m16:34:26.719794 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108eba990>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108eba5a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108ebaea0>]}
+[0m16:34:26.720057 [debug] [MainThread]: Flushing usage events
+[0m16:35:36.669907 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1048888c0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1044a64e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1048ca7b0>]}
+
+
+============================== 16:35:36.674072 | 732f7681-b57c-4043-86f6-4318ce5a0328 ==============================
+[0m16:35:36.674072 [info ] [MainThread]: Running with dbt=1.8.7
+[0m16:35:36.674547 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'fail_fast': 'False', 'version_check': 'True', 'log_path': '/Users/mohit/Documents/Projects/baywheels/analytical-engineering-dbt/logs', 'profiles_dir': '/Users/mohit/.dbt', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'False', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'static_parser': 'True', 'invocation_command': 'dbt compile', 'target_path': 'None', 'log_format': 'default', 'send_anonymous_usage_stats': 'True'}
+[0m16:35:36.675606 [error] [MainThread]: Encountered an error:
+Runtime Error
+  dbt cannot run because no profile was specified for this dbt project.
+  To specify a profile for this project, add a line like the this to
+  your dbt_project.yml file:
+  
+  profile: [profile name]
+  
+  Here, [profile name] should be replaced with a profile name
+  defined in your profiles.yml file. You can find profiles.yml here:
+  
+  /Users/mohit/.dbt/profiles.yml
+  
+[0m16:35:36.677934 [debug] [MainThread]: Resource report: {"command_name": "compile", "command_wall_clock_time": 0.06741796, "process_user_time": 1.034996, "process_kernel_time": 0.164592, "process_mem_max_rss": "96927744", "command_success": false, "process_in_blocks": "0", "process_out_blocks": "0"}
+[0m16:35:36.678355 [debug] [MainThread]: Command `dbt compile` failed at 16:35:36.678278 after 0.07 seconds
+[0m16:35:36.678625 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1045cc320>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1048ca7b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1048ca870>]}
+[0m16:35:36.678874 [debug] [MainThread]: Flushing usage events
+[0m16:35:50.208362 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10aa97c20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10aab2ab0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10aab26c0>]}
+
+
+============================== 16:35:50.212447 | 01755b44-de00-4ba7-b704-b265f8b8cc67 ==============================
+[0m16:35:50.212447 [info ] [MainThread]: Running with dbt=1.8.7
+[0m16:35:50.212946 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'debug': 'False', 'profiles_dir': '/Users/mohit/.dbt', 'log_path': '/Users/mohit/Documents/Projects/baywheels/analytical-engineering-dbt/logs', 'fail_fast': 'False', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'False', 'log_format': 'default', 'introspect': 'True', 'invocation_command': 'dbt compile', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'target_path': 'None', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m16:35:50.215440 [error] [MainThread]: Encountered an error:
+Runtime Error
+  Could not find profile named 'baywheels'
+[0m16:35:50.217684 [debug] [MainThread]: Resource report: {"command_name": "compile", "command_wall_clock_time": 0.0669815, "process_user_time": 1.03685, "process_kernel_time": 0.16504, "process_mem_max_rss": "98926592", "command_success": false, "process_in_blocks": "0", "process_out_blocks": "0"}
+[0m16:35:50.218110 [debug] [MainThread]: Command `dbt compile` failed at 16:35:50.218033 after 0.07 seconds
+[0m16:35:50.218380 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10a2d7c80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10aab2480>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10a90dc70>]}
+[0m16:35:50.218630 [debug] [MainThread]: Flushing usage events

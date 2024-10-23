@@ -1,0 +1,68 @@
+-- Queries Performance Comparisions [Clustering vs Partitioning]
+
+-- normal table
+CREATE OR REPLACE TABLE `baywheels-trips-project.baywheels.baywheels_trips_normal` AS
+SELECT * FROM `baywheels-trips-project.baywheels.baywheels_trips`;
+
+
+-- partitioned table
+CREATE OR REPLACE TABLE `baywheels-trips-project.baywheels.baywheels_trips_partitioned`
+PARTITION BY DATE(start_time) AS
+SELECT * FROM `baywheels-trips-project.baywheels.baywheels_trips`;
+
+-- clustered table
+CREATE OR REPLACE TABLE `baywheels-trips-project.baywheels.baywheels_trips_clustered`
+CLUSTER BY start_station_name AS
+SELECT * FROM `baywheels-trips-project.baywheels.baywheels_trips`;
+
+-- both
+CREATE OR REPLACE TABLE `baywheels-trips-project.baywheels.baywheels_trips_partitioned_clustered`
+PARTITION BY DATE(start_time)
+CLUSTER BY start_station_name AS
+SELECT * FROM `baywheels-trips-project.baywheels.baywheels_trips`;
+
+
+-- Queries
+-- normal query
+-- Normal Table Query
+SELECT
+  start_station_name,
+  end_station_name,
+  COUNT(*) AS total_trips
+FROM `baywheels-trips-project.baywheels.baywheels_trips_normal`
+WHERE DATE(start_time) BETWEEN '2018-01-01' AND '2018-01-31'
+GROUP BY start_station_name, end_station_name
+ORDER BY total_trips DESC;
+
+
+-- partitioned query
+-- Partitioned Table Query
+SELECT
+  start_station_name,
+  end_station_name,
+  COUNT(*) AS total_trips
+FROM `baywheels-trips-project.baywheels.baywheels_trips_partitioned`
+WHERE DATE(start_time) BETWEEN '2018-01-01' AND '2018-01-31'
+GROUP BY start_station_name, end_station_name
+ORDER BY total_trips DESC;
+
+
+---- Clustered Table Query
+SELECT
+  start_station_name,
+  end_station_name,
+  COUNT(*) AS total_trips
+FROM `baywheels-trips-project.baywheels.baywheels_trips_clustered`
+WHERE start_station_name = 'Market St at 10th St'
+GROUP BY start_station_name, end_station_name;
+
+-- Partitioned and Clustered Table Query
+SELECT
+  start_station_name,
+  end_station_name,
+  COUNT(*) AS total_trips
+FROM `baywheels-trips-project.baywheels.baywheels_trips_partitioned_clustered`
+WHERE DATE(start_time) BETWEEN '2018-01-01' AND '2018-01-31'
+  AND start_station_name = 'Market St at 10th St'
+GROUP BY start_station_name, end_station_name
+ORDER BY total_trips DESC;

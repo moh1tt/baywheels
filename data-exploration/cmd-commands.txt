@@ -1,0 +1,9 @@
+# to get the first 5 rows of the csv and explore it
+head -n 10 data.csv | column -t -s ','
+
+
+# to get the number of rows in the csv
+wc -l data.csv
+
+# to unzip the csv
+unzip data.csv.zip

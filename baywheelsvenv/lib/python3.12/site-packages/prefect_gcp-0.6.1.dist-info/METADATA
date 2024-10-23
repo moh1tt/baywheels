@@ -1,0 +1,90 @@
+Metadata-Version: 2.1
+Name: prefect-gcp
+Version: 0.6.1
+Summary: Prefect integrations for interacting with Google Cloud Platform.
+Author-email: "Prefect Technologies, Inc." <help@prefect.io>
+License: Apache License 2.0
+Project-URL: Homepage, https://github.com/PrefectHQ/prefect/tree/main/src/integrations/prefect-gcp
+Keywords: prefect
+Classifier: Natural Language :: English
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: prefect>=3.0.0rc1
+Requires-Dist: google-api-python-client>=2.20.0
+Requires-Dist: google-cloud-storage>=2.0.0
+Requires-Dist: tenacity>=8.0.0
+Requires-Dist: python-slugify>=8.0.0
+Requires-Dist: google-cloud-secret-manager
+Provides-Extra: aiplatform
+Requires-Dist: google-cloud-aiplatform; extra == "aiplatform"
+Provides-Extra: all_extras
+Requires-Dist: google-cloud-storage; extra == "all-extras"
+Requires-Dist: google-cloud-bigquery; extra == "all-extras"
+Requires-Dist: google-cloud-bigquery-storage; extra == "all-extras"
+Requires-Dist: google-cloud-secret-manager; extra == "all-extras"
+Requires-Dist: google-cloud-aiplatform; extra == "all-extras"
+Provides-Extra: bigquery
+Requires-Dist: google-cloud-bigquery; extra == "bigquery"
+Requires-Dist: google-cloud-bigquery-storage; extra == "bigquery"
+Provides-Extra: cloud_storage
+Requires-Dist: google-cloud-storage; extra == "cloud-storage"
+Provides-Extra: dev
+Requires-Dist: coverage; extra == "dev"
+Requires-Dist: google-cloud-aiplatform; extra == "dev"
+Requires-Dist: google-cloud-bigquery-storage; extra == "dev"
+Requires-Dist: google-cloud-bigquery; extra == "dev"
+Requires-Dist: google-cloud-secret-manager; extra == "dev"
+Requires-Dist: google-cloud-storage; extra == "dev"
+Requires-Dist: interrogate; extra == "dev"
+Requires-Dist: mkdocs-gen-files; extra == "dev"
+Requires-Dist: mkdocs-material; extra == "dev"
+Requires-Dist: mkdocs; extra == "dev"
+Requires-Dist: mkdocstrings[python]; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Requires-Dist: pandas; extra == "dev"
+Requires-Dist: pillow; extra == "dev"
+Requires-Dist: pre-commit; extra == "dev"
+Requires-Dist: pyarrow; extra == "dev"
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: pytest-asyncio; extra == "dev"
+Requires-Dist: pytest-env; extra == "dev"
+Requires-Dist: pytest-xdist; extra == "dev"
+Provides-Extra: secret_manager
+Requires-Dist: google-cloud-secret-manager; extra == "secret-manager"
+
+# `prefect-gcp`
+
+<p align="center">
+    <a href="https://pypi.python.org/pypi/prefect-gcp/" alt="PyPI version">
+        <img alt="PyPI" src="https://img.shields.io/pypi/v/prefect-gcp?color=0052FF&labelColor=090422"></a>
+    <a href="https://pypistats.org/packages/prefect-gcp/" alt="Downloads">
+        <img src="https://img.shields.io/pypi/dm/prefect-gcp?color=0052FF&labelColor=090422" /></a>
+</p>
+
+`prefect-gcp` makes it easy to leverage the capabilities of Google Cloud Platform (GCP) in your flows, featuring support for Vertex AI, Cloud Run, BigQuery, Cloud Storage, and Secret Manager.
+
+Visit the full docs [here](https://PrefectHQ.github.io/prefect-gcp).
+
+### Installation
+
+To start using `prefect-gcp`:
+
+```bash
+pip install prefect-gcp
+```
+
+To install extras, see [here](https://prefecthq.github.io/prefect-gcp/#installation).
+
+### Contributing
+
+Thanks for thinking about chipping in! Check out this [step-by-step guide](https://prefecthq.github.io/prefect-gcp/#installation) on how to get started.

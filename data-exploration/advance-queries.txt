@@ -1,0 +1,71 @@
+# Advance SQL Queries to help practice and learn how sql can interact with the db
+
+CTE: The trip_stats CTE calculates the average trip duration and trip count for each user type.
+Advantages: Using a CTE improves readability and allows for easier maintenance of complex queries by breaking them down into simpler components.
+Advanced Concepts: CTEs allow for recursive queries and help structure the query in a way that can enhance performance and clarity.
+
+WITH trip_stats AS (
+    SELECT
+        user_type,
+        AVG(duration_sec) AS average_duration,
+        COUNT(*) AS trip_count
+    FROM
+        baywheels_trips
+    GROUP BY
+        user_type
+)
+SELECT
+    user_type,
+    average_duration,
+    trip_count
+FROM
+    trip_stats
+WHERE
+    average_duration > 500
+ORDER BY
+    average_duration DESC;
+
+
+
+LAG Function: This query uses the LAG window function to compare the trip count of the current month with the previous month.
+Advanced Concepts: Window functions are a powerful feature for performing calculations across sets of rows related to the current row, allowing for advanced comparisons and insights.
+
+WITH monthly_trips AS (
+    SELECT
+        DATE_TRUNC('month', start_time::timestamp) AS month,
+        COUNT(*) AS trip_count
+    FROM
+        baywheels_trips
+    GROUP BY
+        month
+)
+SELECT
+    month,
+    trip_count,
+    LAG(trip_count) OVER (ORDER BY month) AS previous_month_count,
+    trip_count - COALESCE(LAG(trip_count) OVER (ORDER BY month), 0) AS change_from_previous
+FROM
+    monthly_trips
+ORDER BY
+    month;
+
+
+View: The user_trip_summary view encapsulates the logic for summarizing trips by user type, which can be reused across multiple queries.
+Advantages: Views simplify complex queries and enhance security by restricting direct access to the underlying tables. They provide a consistent way to access calculated metrics.
+
+CREATE VIEW popular_trips AS
+SELECT
+    start_station_name,
+    end_station_name,
+    COUNT(*) AS trip_count,
+    AVG(duration_sec) AS average_duration
+FROM
+    baywheels_trips
+GROUP BY
+    start_station_name, end_station_name
+ORDER BY
+    trip_count DESC
+LIMIT 10;
+
+
+

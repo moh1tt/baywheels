@@ -1,0 +1,300 @@
+From Data to Insights: Building a Data Engineering Pipeline Analyzing BayWheels Bike Data
+
+Data engineering is at the heart of turning raw data into actionable insights, and with the explosion of big data, it's never been more important to have the right tools to manage the flow of information. But where do you start when faced with an overwhelming number of platforms, databases, and orchestration tools?
+In this hands-on project, I'll guide you through the process of building a robust data engineering pipeline - step by step - while exploring the key differences and learning curves associated with each tool. We'll be using real-world data from BayWheels, a bike-sharing service in San Francisco, to tackle challenges like data extraction, ingestion, transformation, and automation.
+The goal isn't just to build a functional pipeline, but to understand why we choose tools like Google Cloud Storage (GCS), BigQuery, PostgreSQL, and Prefect, and how they complement each other in handling the entire data lifecycle. Through trial and error, I'll share what I've learned - from the steep learning curve of cloud-based data storage to the elegance of orchestration with Prefect. This blog is as much about the process of discovery as it is about the final product.
+Whether you're just starting out or looking to refine your skills, this journey through modern data engineering tools will provide insights into how to build scalable, automated data pipelines that can handle the complexities of real-world data.
+Let's dive in and explore the tools, challenges, and learning experiences that come with building this pipeline!
+Setting Up the Foundation: ETL vs ELT and Initial Tools
+Before diving into the practical aspects of this project, it's essential to understand the difference between ETL (Extract, Transform, Load) and ELT (Extract, Load, Transform), as it will shape the data flow within the pipeline. In this project, we are primarily focusing on an ELT approach. For a deeper dive into the differences, you can check out this detailed blog post.
+1: Creating a Virtual Environment
+The first step in any data engineering project is setting up a controlled environment. To ensure that our project dependencies do not interfere with our system-wide packages, we'll create a virtual environment.
+2: Setting Up Docker Compose with PostgreSQL and pgAdmin
+Next, we'll use Docker Compose to set up PostgreSQL, which will serve as our initial database, and pgAdmin to visually inspect and manage the database. Here's the docker-compose.yml file that sets up both services:
+version: '1'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: baywheels
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
+This configuration sets up:
+PostgreSQL (with the database name baywheels and credentials),
+pgAdmin to manage PostgreSQL through a web interface.
+
+Run the following command to start the services:
+docker-compose up -d
+3: Exploring and Understanding the Data
+With the database set up, we can now start downloading and analyzing the data. But before ingestion, it's always good to explore the dataset. We use basic command-line tools to inspect the CSV files.
+# To get the first 5 rows of the CSV and explore it
+head -n 10 data.csv | column -t -s ','
+
+# To count the number of rows in the CSV
+wc -l data.csv
+
+# To unzip the CSV file
+unzip data.csv.zip
+This gives a basic understanding of what the data looks like before we load it into PostgreSQL. Now, let's move on to writing the ingestion script that will help us automate this process!
+Ingesting and Storing BayWheels Data as Parquet Files
+In this part of the project, we will download BayWheels data, clean it, convert it to Parquet format, and then ingest it into PostgreSQL. The choice of Parquet is particularly important because of its columnar format, making it optimal for storing large datasets and performing analytical queries.
+Why Parquet?
+Efficient Compression: Parquet compresses data efficiently, reducing storage space.
+Columnar Format: This is highly suited for analytical workloads, as it allows you to query specific columns.
+Improved Query Performance: Only the necessary columns are loaded during queries, reducing I/O operations.
+
+1: Downloading Data
+The process begins by generating URLs for the BayWheels dataset based on a specified date range. The URLs point to zipped CSV files containing trip data for each month.
+def generate_urls(start_date, end_date):
+    # Generate a list of URLs for each month in the date range
+The download_and_extract_csv function is responsible for downloading these zip files and extracting the CSV files contained within.
+2: Converting to Parquet
+After downloading, the CSV files are read into a Pandas DataFrame and cleaned using the clean_df function. The data is then converted to Parquet format using the pandas dataframe method, to_parqurt.
+# Write the combined DataFrame to Parquet
+  parquet_file_name = os.path.join(
+                       'data', zip_file_name.replace('.csv.zip', '.parquet'))
+  final_df.to_parquet(parquet_file_name, compression="gzip")
+3: Ingesting into PostgreSQL
+Finally, the cleaned and converted data is ingested into a PostgreSQL database. The process_and_load_data function handles this, using the to_sql method from Pandas to load the data into the specified table.
+chunk.to_sql('baywheels_trips', engine, if_exists='append', index=False)  # Load data into PostgreSQL
+4: Start Quering Advance SQL
+Advanced SQL techniques, such as Common Table Expressions (CTEs), window functions like LAG, and views, empower users to write more efficient, readable, and maintainable queries. These tools allow for complex data analysis and manipulation, enabling deeper insights into datasets. By mastering advanced SQL, you can significantly enhance your ability to interact with databases, making it easier to extract valuable information and identify trends. For those interested in expanding their SQL knowledge and improving query performance, more resources can be found here.
+Orchestration with Prefect
+In the realm of data engineering, orchestration is crucial for automating and managing complex workflows. Among the various tools available, Prefect stands out due to its user-friendly design, strong community support, and ability to handle complex data workflows effortlessly. Prefect allows for easy error handling, retries, and logging, making it a robust choice for orchestrating data pipelines.
+1: Flows and Tasks
+Prefect uses the concepts of flows and tasks to define and manage workflows. A flow is a collection of tasks, representing a complete data pipeline, while a task is a single unit of work, such as downloading data, processing it, or loading it into a database.
+With Prefect, you can automate your data ingestion and transformation processes. For instance, in the provided code, tasks are defined to handle downloading Bay Wheels data, cleaning the DataFrame, converting data into Parquet format, and loading it into PostgreSQL. This modular approach allows for better organization, easier debugging, and improved code reuse.
+2: Prefect Blocks
+Prefect blocks facilitate the integration of external services and data sources into your workflows. They can manage credentials, store configurations, and handle connections to services like Google Cloud Storage or databases. For example, in the ingestion flow, you utilize Prefect blocks to manage GCP credentials and interact with Google Cloud Storage.
+Here's a quick reference from the provided code:
+gcp_credentials_block = GcpCredentials.load("gcp-creds")
+gcs_block = GcsBucket.load('gcs-block')
+This code snippet demonstrates how to load Prefect blocks for GCP credentials and a GCS bucket, enabling seamless integration into your workflows. By utilizing Prefect's capabilities, you can create efficient and maintainable data workflows, allowing your data pipelines to run smoothly and reliably.
+Loading Data into Google Cloud Storage (GCS) with Prefect
+As data engineering pipelines evolve, the need for centralized storage becomes increasingly important. One powerful approach is to store data in a data lake - a centralized repository that holds vast amounts of raw data in its native format. By loading the BayWheels data into Google Cloud Storage (GCS), we achieve several key advantages:
+Accessibility: Storing data in GCS allows different teams (data scientists, analysts, etc.) to access the same raw or transformed data. Whether they are running machine learning models or performing analytics, having the data in a data lake ensures a single source of truth.
+Scalability: GCS provides a scalable environment for storing large datasets like the BayWheels bike-sharing data, which can grow over time. With cloud-based storage, you don't need to worry about physical storage limits.
+Data Democratization: A data lake encourages data democratization, meaning everyone in your organization has access to the same raw data, and transformations can be built on top of it, fostering collaboration across different teams.
+Separation of Concerns: Loading raw or transformed data into GCS decouples storage from processing. This allows the data to be used by a variety of tools, including BigQuery, Spark, or DBT for different types of analysis and transformations without needing to modify the original source data.
+
+With this motivation in mind, let's walk through how we can orchestrate the loading of BayWheels data into GCS using Prefect.
+1: Create GCS Bucket
+First, ensure you have a GCS bucket set up in your Google Cloud project. This bucket will serve as the destination for the processed Parquet files.
+2: Set Up GCP Credentials
+Prefect uses Blocks to manage integrations with external services. We will use GcpCredentials to handle our GCS authentication securely. Ensure that you have created the necessary service account in GCP with the right permissions (such as Storage Object Admin).
+3: Writing Data to GCS in Prefect 
+In the Prefect ingestion script, the following function uploads the processed Parquet files to the GCS bucket.
+# Function to write data to Google Cloud Storage
+@task()
+def write_to_gcs(path):
+    gcp_credentials_block = GcpCredentials.load("gcp-creds")
+    gcs_block = GcsBucket.load('gcs-block')
+
+    # Extract the year and month from the path
+    year_month = path.split('-')[0]
+    year = year_month[:4]  # Extract the year (first 4 characters)
+    month = year_month[4:6]  # Extract the month (next 2 characters)
+
+    # Construct the new path in GCS
+    new_path = f"baywheels/{year}/{month}/{path}"
+
+    # Upload the Parquet file to GCS
+    gcs_block.upload_from_path(
+        from_path='data/' + path, to_path=new_path
+    )
+    print(f"File {path} successfully uploaded to GCS at {new_path}.")
+The write_to_gcs task loads GCP credentials and the GCS bucket block from Prefect. These blocks handle authentication and the connection to GCS.
+The Parquet files are uploaded to the specified bucket under a structured path format, e.g., baywheels/2018/01/201801-fordgobike-tripdata.parquet, which organizes the data by year and month.
+
+4: Incorporating into the Prefect Flow
+In your overall Prefect flow, once the data is processed and converted into Parquet, the write_to_gcs task is called to upload the file:
+# Main flow to orchestrate the data ingestion and uploading process
+@flow()
+def ingest_to_postgres_flow(db_name, user, password, host, port, start_date, end_date):
+    engine = create_db_connection(db_name, user, password, host, port)
+    data_urls = generate_urls(start_date, end_date)
+
+    for url in data_urls:
+        zip_file_name, csv_files = download_and_extract_csv(url)
+        for csv_file in csv_files:
+            process_and_load_data(zip_file_name, csv_file, engine)
+        cleanup(zip_file_name)
+        write_to_gcs(zip_file_name.replace('.csv.zip', '.parquet'))
+    
+    print("All data successfully loaded and uploaded to GCS!")
+The final output is a scalable and accessible data storage in GCS, which can be leveraged by other tools like BigQuery for further analysis or transformation.
+
+Ingesting GCS Data into BigQuery for Advanced Analytics
+With our data successfully stored in Google Cloud Storage (GCS), the next step is to ingest it into BigQuery for advanced analytics. BigQuery offers powerful querying capabilities and allows us to analyze large datasets efficiently. In this ETL pipeline, we will automate the process of extracting data from GCS, transforming it as needed, and loading it into BigQuery for further analysis.
+1: Extracting Data from GCS
+Our first step is to pull the raw trip data files from GCS. We use Prefect tasks to automate this process, ensuring the correct files are downloaded based on the year and month of the trip data. The task dynamically generates the GCS path and downloads the files locally:
+@task(retries=3, log_prints=True)
+def extract_from_gcs(year: int, month: int) -> Path:
+    """Download trip data from GCS"""
+    gcs_path = f"baywheels/{year}/{month:02d}/{year}{month:02d}-fordgobike-tripdata.parquet"
+    print(f"GCS Path: {gcs_path}")
+    os.makedirs(f"data/baywheels/{year}/{month:02d}/", exist_ok=True)
+    gcs_block = GcsBucket.load('gcs-block')
+    gcs_block.get_directory(from_path=gcs_path, local_path=f"data/")
+    return Path(f"data/{gcs_path}")
+This ensures that the relevant data files are pulled from GCS and stored locally, ready for the next step in the pipeline.
+2: Transforming the Data
+Before loading the data into BigQuery, we clean and transform it. This step ensures data consistency and handles missing values:
+@task()
+def transform(path: Path) -> pd.DataFrame:
+    """Data cleaning example"""
+    df = pd.read_parquet(path)
+    df['start_station_name'] = df['start_station_name'].fillna('Unknown Start Station')
+    df['end_station_name'] = df['end_station_name'].fillna('Unknown End Station')
+    df['user_type'] = df['user_type'].fillna('Unknown')
+    return df
+We ensure columns like start_station_name, end_station_name, and user_type have no missing values by filling them with appropriate placeholders.
+3. Loading Data into BigQuery
+Once the data is transformed, we use the following task to load it into BigQuery:
+@task()
+def write_bq(df: pd.DataFrame) -> None:
+    """Write DataFrame to BigQuery"""
+    gcp_credentials_block = GcpCredentials.load("gcp-creds")
+    df.to_gbq(
+        destination_table="baywheels.baywheels_trips",
+        project_id="baywheels-trips-project",
+        credentials=gcp_credentials_block.get_credentials_from_service_account(),
+        chunksize=10000,
+        if_exists="append",
+    )
+This task appends the cleaned data to our baywheels.baywheels_trips table in BigQuery, enabling advanced analytics and reporting.
+4. Orchestrating the ETL Flow
+Finally, we tie everything together in a Prefect flow:
+@flow()
+def etl_gcs_to_bq():
+    """Main ETL flow to load data into BigQuery"""
+    year = 2018
+    month = 2
+    path = extract_from_gcs(year, month)
+    df = transform(path)
+    write_bq(df)
+This flow orchestrates the end-to-end process, ensuring data is extracted from GCS, cleaned, and loaded into BigQuery for analysis.
+Clustering vs. Partitioning: Advanced Big Queries
+In the realm of data analytics, optimizing query performance is crucial, especially when dealing with large datasets. Google BigQuery offers powerful features such as partitioning and clustering to enhance the efficiency of data retrieval. Understanding how these features work can lead to significant improvements in query performance and cost savings.
+What are Partitioning and Clustering?
+Partitioning divides a table into segments based on the values of a specified column, often a timestamp or date. This allows BigQuery to scan only the relevant segments when executing a query, significantly reducing the amount of data processed.
+Clustering, on the other hand, organizes data within each partition based on the values of one or more columns. This further enhances query performance by allowing BigQuery to skip over rows that do not match the specified clustering keys.
+
+Query Performance Comparison
+To illustrate the impact of partitioning and clustering on query performance, we executed the following queries on our baywheels_trips dataset.
+1: Normal Query:
+SELECT
+  start_station_name,
+  end_station_name,
+  COUNT(*) AS total_trips
+FROM `baywheels-trips-project.baywheels.baywheels_trips_normal`
+WHERE DATE(start_time) BETWEEN '2018-01-01' AND '2018-01-31'
+GROUP BY start_station_name, end_station_name
+ORDER BY total_trips DESC;
+2: Partitioned and Clustered Query:
+-- Partitioned and Clustered Table Query
+SELECT
+  start_station_name,
+  end_station_name,
+  COUNT(*) AS total_trips
+FROM `baywheels-trips-project.baywheels.baywheels_trips_partitioned_clustered`
+WHERE DATE(start_time) BETWEEN '2018-01-01' AND '2018-01-31'
+  AND start_station_name = 'Market St at 10th St'
+GROUP BY start_station_name, end_station_name
+ORDER BY total_trips DESC;
+By comparing the execution time and data processed for each query type, you can clearly illustrate the performance benefits of using partitioning and clustering in BigQuery.
+Analytical Engineering: Working with dbt
+Data Build Tool (dbt) is a powerful tool for transforming data in your warehouse by writing simple SQL queries. It provides an environment to manage your analytical code, centralize transformations, and automate the execution of your data models. dbt focuses on transformations after data is loaded into the warehouse, enabling data analysts and engineers to version control their SQL transformations, test their code, and build reliable data pipelines.
+dbt operates on the "T" in ELT (Extract, Load, Transform), allowing you to:
+Organize your SQL models into layers (staging, core, and mart layers)
+Automate dependency resolution between models
+Run transformations at scale in cloud data warehouses (like BigQuery, Snowflake, and Redshift)
+Track changes and version control your SQL models using Git
+
+In this project, we leverage dbt to transform raw trip data from the BayWheels bike-sharing system into cleaned and optimized views and tables, which are later used for analytics and dashboards in Google Looker.
+1: Staging Layer in dbt
+In dbt, the staging layer is where raw data is transformed into a cleaned and consistent format that is easier to use in analyses. The staging SQL code for our BayWheels trips data, staging_baywheels.sql.
+In this staging model:
+We generate a unique trip ID (tripid) using dbt_utils.generate_surrogate_key to combine start_station_id and start_time.
+The data is cleaned by casting the station IDs, timestamps, and other numeric fields to the correct data types.
+We ensure that only trips with non-null start_station_id are included, and we handle potential duplicates using a row number (rn).
+
+The schema for this model is well-documented and ensures clarity around what each field represents.
+2: Core Layer: Fact Table
+The fact table in the core layer is where we store the most granular data that will be used in analysis. This fact table aggregates, filters, and applies geospatial calculations. baywheels_trips_fact.sql.
+This table contains:
+Trip details, such as the trip ID, bike ID, and timestamps.
+Geospatial fields for latitude and longitude that will allow for mapping visualizations in Looker.
+Calculated trip distance in meters using the ST_DISTANCE function, which measures the straight-line distance between start and end stations.
+
+Visualizing BayWheels Data with Google Looker
+In the realm of modern data analytics, Google Looker stands out as a powerful business intelligence (BI) tool, enabling organizations to create insightful dashboards and visualizations from raw data. Once your data is structured and ready (as we did using dbt and BigQuery), Looker allows you to extract meaningful insights and present them in an accessible way.
+In this blog, we'll walk through how we connected our BayWheels bike-sharing data to Looker and built meaningful visualizations for understanding usage patterns and customer behavior.
+1: Connecting Google Looker to BigQuery
+Since our BayWheels data is already stored in BigQuery and transformed using dbt, integrating Looker is the next step. Looker natively connects to BigQuery, making it easy to set up a seamless pipeline from the warehouse to the dashboard. Here's how:
+Create a new connection in Looker by selecting BigQuery as the data source.
+Provide the necessary credentials and permissions for Looker to access your BigQuery project.
+Choose the BigQuery dataset (in our case, the one containing the BayWheels fact table) that you want to analyze.
+
+Once connected, Looker will automatically pull in the schema and table structure, allowing you to start building visualizations right away.
+2: Building the Data Model in Looker
+Before creating dashboards, we need to define explores in Looker. Explores are the foundational objects that describe how Looker should interact with your data. These include:
+Dimensions: Fields that you can use to slice your data, like start_station_name, user_type, or start_time.
+Measures: Aggregated metrics like the count of trips or the total trip distance.
+
+3: Creating Visualizations in Google Looker
+Once the data model is set up, you can start creating different types of visualizations to answer specific questions about the BayWheels data.
+For a summary of baywheels trip data on looker, follow the dashboard below.
+Conclusion and Code Availability
+In this journey, we've demonstrated how to build an end-to-end analytics pipeline using Google Looker, dbt, BigQuery, and Prefect. We began by extracting and transforming the BayWheels bike-sharing data using dbt, then loading the cleaned data into BigQuery. Finally, we visualized key insights using Looker's powerful data exploration and dashboarding capabilities. This process allows us to monitor bike usage patterns, understand customer behavior, and derive actionable insights for operational improvements.
+The code for this entire pipeline - from ETL to Looker dashboarding - has been made available on GitHub. You can access it at the following link:
+GitHub Repository: BayWheels Data Engineering Project
+Feel free to explore, fork, and adapt the code to suit your specific data projects. Whether you're working with bike-sharing data or another use case, this framework provides a solid foundation for creating data pipelines and insightful visualizations.
+Alternatives to the Tools
+In building this project, we used a specific set of tools. However, there are numerous alternatives that can be just as effective, depending on your infrastructure and requirements.
+1. Orchestration Tools
+Prefect: Used in this project for managing the ETL flow.
+Apache Airflow: Another popular orchestration tool with extensive features for scheduling and monitoring workflows.
+Mage: A relatively new open-source data pipeline tool designed to make ETL simpler and more intuitive.
+
+2. Data Warehouses and Lakes
+Google Cloud Storage (GCS): Used here as the staging area for raw data.
+Amazon S3: A commonly used data lake storage option that integrates well with AWS services.
+Azure Data Lake: If you're working in a Microsoft-based environment, Azure Data Lake Storage is another great alternative for storing large datasets.
+
+3. Data Transformation Tools
+dbt (Data Build Tool): Used in this project for transforming data in BigQuery.
+Apache Spark: If you're dealing with large datasets and need a more robust, distributed system, Spark is widely used for data transformation.
+Trino (Presto): An SQL query engine for large-scale data analysis, particularly effective when dealing with distributed systems.
+
+4. Visualization Tools
+Google Looker: Our choice for visualizing the BayWheels data and building interactive dashboards.
+Tableau: A popular BI tool known for its intuitive visualizations and drag-and-drop interface.
+Power BI: Microsoft's BI tool, widely used for creating reports and dashboards, especially in Azure-based ecosystems.
+
+Moving Forward
+As you continue to build out your data projects, remember that your technology stack should be adaptable and scalable to meet your specific needs. The tools we used - Prefect for orchestration, dbt for transformation, BigQuery for data warehousing, and Looker for visualization - represent a modern and cloud-native approach. However, by understanding the alternatives, you can choose the right tools for your environment, whether that's AWS, Azure, or another platform.
+This project demonstrates the power of leveraging cloud-native technologies for data analytics, and the modular approach ensures that you can swap out components as your infrastructure evolves.
+Feel free to dive into the codebase, adapt it to your specific needs, and explore additional insights from your data!

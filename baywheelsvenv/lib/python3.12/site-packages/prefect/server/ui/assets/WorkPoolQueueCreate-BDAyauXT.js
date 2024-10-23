@@ -1,0 +1,2 @@
+import{d as r,W as n,c as s,j as a,k as u,o as m,l as t,m as o,d7 as p,d8 as c}from"./index-DGGjalVM.js";import{u as _}from"./usePageTitle-JaUVXf-x.js";const P=r({__name:"WorkPoolQueueCreate",setup(k){const e=n("workPoolName");return _("Create Work Pool Queue"),(d,f)=>{const l=u("p-layout-default");return m(),s(l,null,{header:a(()=>[t(o(p),{"work-pool-name":o(e)},null,8,["work-pool-name"])]),default:a(()=>[t(o(c),{"work-pool-name":o(e)},null,8,["work-pool-name"])]),_:1})}}});export{P as default};
+//# sourceMappingURL=WorkPoolQueueCreate-BDAyauXT.js.map

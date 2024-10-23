@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "baywheels-trips-project",
+  "private_key_id": "6bf85af67fd6e27dac0a4b2ebc2718b5fd42b7d2",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC5f0lWCv2rc4sv\n80gs5BLvR8MyrMaH9Pd6sYgaUzoIUulLdYk5Oip5IY4+Ca7CTA17n1EXEu/aUFDf\nXhu6TYFAJ7jyJ0j4NiFjEuPMtNdQqjkOCNVoWijisQeygYVxdxyrkauZjgo9rW58\nZ8QGgJY1EAnBwzFIsLoI8Wn+g7vG5UR/IWcqepssqKls/nbBBPdVqNfzPaB/d+ot\nnBbbWloDxxQgpnhrAj7b6l9T4GENxmGonMzY1ScaaYz9kIMVyhhBch1J9Gb/12SW\nxmaya3gaNVPHaRUB2sFiydg1WyRo47QuwGCKo6Rfu//2RLVipFEUGbkW+gRjvZcx\n4OqP61o/AgMBAAECggEACUm70NCdEgQnkH+UehbzccK8neFz0WPtLloMUBEhwz/v\niYU5mUF11fndpvKSKw1m0W1RQKAEnYBPBFgweDwgQCedBZb8+tyvAEh2Wo4lh9b2\nI2NC2EZHbM5jbcc5eMx3hYm2N2qazarM8PK7KH4wxzhl3Kta4OJkdkUsQv+ym8tS\nK2tYFotsTTvTf0VNVDU7nDzohZiypLr3fJsPiofXtxApIHEVlM9bmNApp+Q9st+O\nz43dpu2jD5bBJ/R9UZIxzwc1SliN7Vrq5uHGRtCuzfMvEiD7/9XEVeE8QN29I13H\ngQGW8B5OY9oDS7wayOQkJl2u1uArpJWl0wGsiOaqwQKBgQDowXmacNjFgkhc00Cx\nMfgdBJBuS8i23a04wPJlsnRRA16fqExc7FCg/ZcqlzGTPqEosydDKb7koDiVok/D\noU2ugvnRddpfAWMJ2twJi/xKbCyqlKXXyHVDBjU02/aQHQFj/AP0CsdwJmAPk/Wz\nsCzwVqjIFP0z+p2oWbAA6mGpwQKBgQDMBZ8ZxZE61hewpRGgxltPJMhP3tQv2XIN\noVtk+QvuLCThfEZyQPOBiU860V1F8L/AiW+rtrWuKCLJqdb60XoBCHbKArAHdHYg\n8SVKV4v0uEsgYL9AH/GDib6jQ2TQH9AldreXY/ORefYozqM4Yng7mu70oXwNUai8\nb51ZASYD/wKBgC8r1ttH94a/yq6VWc0PlXs8C5Fu5nS5JHwWDooxyoUIq8qrrx49\n/nFCM7q7/Z4b2UmIVXK1KSzok88vn/7D2ByACuU6f1E11L6QjnuY1T64Aa1ohtve\nknVM8seNtMCsQDXlQ1/YN2cxP9KoZ+lM0S68QWSbbF12czFFS/hDiBuBAoGBALKb\nVT49jDdix5h32afTHop5m/b4Du/Yv5UZJiaONBiMgrj3j8BkBgjnyPmn4azh5yxJ\n5P4BVKmjL1k2GyK2kcUnwL52fd344ZVTJp8fZ0GUuQgeSi98B3Vs9/x7el0NDK5P\ncMfS058OkyYESDWLVtBvgTOdzzjlvP9CAxCxBbPHAoGACFrywTGU2eOPbJ6b1daR\nnJtkVrOyOw3j4sgPSMxqe7VmGLLu9/Tn4+X+UOJDj7ljXVX8D32//DycmMzBDftO\nTQ+/od657pDa3zylUI2W0FVIcAx5KRUa4744E/RSSs7zRcISPmsQ+DXkhANYj1/H\nueCngHKXjbOd99r6mnl17tw=\n-----END PRIVATE KEY-----\n",
+  "client_email": "gcp-service-account-baywheels@baywheels-trips-project.iam.gserviceaccount.com",
+  "client_id": "106936491033865052278",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/gcp-service-account-baywheels%40baywheels-trips-project.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

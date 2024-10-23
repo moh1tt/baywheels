@@ -1,0 +1,2 @@
+import{d as a,W as n,g as k,t as l,h as m,u as p}from"./index-DGGjalVM.js";const w=a({__name:"WorkQueueToWorkPoolQueueRedirect",setup(W){const u=n("workQueueId"),s=k(),t=l(s.workQueues.getWorkQueue,[u]),o=p(),r=m();return t.promise().then(({response:e})=>{if(!e.workPoolName){o.replace(r.workPools());return}o.replace(r.workPoolQueue(e.workPoolName,e.name))}),()=>{}}});export{w as default};
+//# sourceMappingURL=WorkQueueToWorkPoolQueueRedirect-Cf0U41Em-BGeOIy9L.js.map

@@ -1,0 +1,32 @@
+version: 2
+
+sources:
+  - name: staging
+    database: baywheels-trips-project
+    schema: baywheels
+    tables:
+      - name: baywheels_trips
+        description: "Raw trip data from BayWheels using dbt"
+
+models:
+  - name: staging_baywheels
+    description: "A staging view for BayWheels trips data with basic transformations like generating a unique trip ID and filtering out null stations."
+    columns:
+      - name: tripid
+        description: "Unique identifier for each trip, generated using the start_station_id and start_time."
+      - name: start_station_id
+        description: "ID of the station where the trip started."
+      - name: end_station_id
+        description: "ID of the station where the trip ended."
+      - name: bike_id
+        description: "Unique identifier for the bike used in the trip."
+      - name: start_time
+        description: "Timestamp when the trip started."
+      - name: end_time
+        description: "Timestamp when the trip ended."
+      - name: duration_sec
+        description: "Total trip duration in seconds."
+      - name: user_type
+        description: "Type of user (e.g., subscriber or customer)."
+      - name: bike_share_for_all_trip
+        description: "Indicates whether the trip was part of a bike share for all program."
